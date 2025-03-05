@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>quizapp</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+  <div class="container">
+  <div id="rightside">
+    <h1 style="font-family: sans-serif">NEW USER REGISTRATION</h1>
+
+    <form style="text-align: left;" method="POST" action="/signup">
+      <label>enter email</label>
+      <input type="email" placeholder="xyz@gmail.com" name="email">
+      <label>enter date of birth</label>
+      <input type="date" id="dob" name="dob">
+      <label>enter full namel</label>
+      <input type="text" placeholder="name" name="name">
+      <label>enter qualification</label>
+      <input type="text" placeholder="qualification" name="qual">
+      <label>enter password</label>
+      <input type="password" placeholder="password" id="password" name="pass">
+      <div style="display:flex;flex-direction: row;justify-items: left;"><input type="checkbox" id="togglePassword">show password</div>
+      <input type="submit" value="signup">
+      <p style="font-family: sans-serif;font-size: 16px;font-weight: 700;">already registered ? <a href="{{ url_for('home') }}" style="text-decoration: none;font-family: sans-serif;font-size: 16px;font-weight: 800;">login</a></p>
+
+    </form>
+
+
+  </div>
+  <div id="leftside">
+    <img src="static/office.png" alt="officeimage from pngtree" style="height: 70%;width: 70%;">
+
+  </div>
+  </div>
+  <footer>
+
+    <div style="text-align: right;color:white; align-items: center;">
+       <p style="font-family: sans-serif;margin-left:10px;font-weight:700;">© 2025 Quiz Master 24f1002341 Yash Jha</p>
+    </div>
+
+
+  </footer>
+  <script>
+    const togglePassword = document.getElementById("togglePassword");
+    const password = document.getElementById("password");
+  
+    togglePassword.addEventListener("change", function () {
+      if (this.checked) {
+        password.type = "text"; 
+      } else {
+        password.type = "password";
+      }
+    });
+
+  </script>
+
+
+
+  <script src="script.js"></script>
+</body>
+
+</html>
