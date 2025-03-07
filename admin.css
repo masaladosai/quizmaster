@@ -1,0 +1,150 @@
+#container{
+    display:flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+#sidebar{
+    position: fixed;
+    display:flex;
+    width:20vw;
+    background-color:rgb(11, 11, 22);
+    flex-direction: column;
+    color:white;
+    height:100%;
+
+
+}
+#main{
+    display:flex;
+    flex-direction: column;
+    background:rgb(228, 231, 202);
+    width:80vw;
+    margin-left: 20vw;
+    height: 100%;
+
+}
+#main header{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    height:6vh;
+    justify-content: right;
+    align-items: center;
+
+}
+#cast{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:6vh;
+    background-color:rgb(33, 35, 49);
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 500;
+}
+#admindetail{
+    display:flex;
+    flex-direction: row;
+    height:10vh;
+    background:rgb(20, 22, 33);
+    font-family: sans-serif;
+    font-weight: 500;
+    align-items: center;
+}
+#sidebar a{
+    font-size:25px;
+    font-weight:700;
+    margin-top: 6%;
+    padding:10px;
+    text-decoration: none;
+    font-family:Helvetica, sans-serif;
+    color:white;
+    transition: background 0.5s ease-in-out;
+    
+}
+#sidebar a img{
+    margin-right:20px;
+    color:white;
+    transform: translate(0,5px);
+}
+#sidebar a:hover{
+    background-color: rgb(19, 174, 236);
+}
+#mainbody{
+    display:flex;
+    flex-direction: column;
+
+}
+#stats{
+    display:flex;
+    flex-direction: row;
+    margin-top:5%;
+    
+}
+#stats .box{
+    width:15vw;
+    height: 13vh;
+    margin-left:5%;
+    display:flex;
+    flex-direction: row;
+
+}
+#stats .box .detail{
+    width:75%;
+    display:flex;
+    color:white;
+    font-family: helvetica;
+    flex-direction: column;
+    
+}
+.icon{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:25%;
+}
+.icon img{
+    height: 20px;
+    width:20px;
+}
+#detail1{
+    background-color: rgb(7, 157, 170);
+}
+#icon1{
+    background-color: rgb(6, 43, 43);
+}
+
+#detail2{
+    background-color: rgb(188, 12, 21);
+}
+#icon2{
+    background-color: rgb(43, 6, 6);
+}
+#detail3{
+    background-color: rgb(186, 165, 5);
+}
+#icon3{
+    background-color: rgb(43, 39, 6);
+}
+#detail4{
+    background-color: rgb(12, 188, 12);
+}
+#icon4{
+    background-color: rgb(6, 43, 8);
+}
+#charts{
+    display:flex;
+    flex-direction: row;
+    height: 60vh;
+    margin-top:5%;
+}
+#chart1{
+    display:flex;
+    margin-left: 2%;
+    scale:80%;
+
+}
+#chart2{
+    transform: translate(-30%,-10%);
+}
