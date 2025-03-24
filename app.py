@@ -56,7 +56,7 @@ def home():
             
 
             if v[0]=='kilmish@gmail.com' and v[1]=="andhera":
-                return "admin dashboard"
+                return render_template('admin.html')
             else:
                     user=User.query.filter_by(email=v[0]).first()
                     if user is not None:
