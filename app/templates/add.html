@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>quizapp</title>
+  <link rel="stylesheet" href="static/css/admin.css">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #add,#del{
+            margin-top:10vh;
+            margin-bottom: 3vh;
+            width:75vw;
+            margin-left:1.5vw;
+            background:white;
+            align-items: center;
+            display:flex;
+            justify-content: center;
+            flex-direction: column;
+            border-radius:15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+        }
+        #add{
+            min-height: 20vh;
+            padding-top: 3vh;
+            padding-bottom: 3vh;
+            
+        }
+        #add table{
+            width:70vw;
+            height: 10vh;
+           
+           
+        }
+        #del{
+            padding-top: 6vh;
+            padding-bottom: 3vh;
+            color:black;
+        }
+
+        #del table{
+            width:70vw;
+            
+           
+           
+        }
+    
+        #add table th,#add table td{
+            border: 2px solid black;
+            gap: 0;
+        }
+        #main{
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(248, 242, 242);
+            height: 100vh;
+        }
+        #del table{
+            width:70vw;
+            height: 10vh;
+            border: 4px solid black;
+            border-collapse: collapse;
+            
+        }
+        #del table th,#del table td{
+            border: 2px solid black;
+            
+        }
+
+        input[type="text"]{
+            width:99%;
+            height: 100%;
+            transition: all 0.3s ease-in-out; 
+            padding: 0 0;  
+            margin: 0 0; 
+            border: none;  
+            font-family: arial;
+            font-weight: 700;
+        }
+        input[type="submit"]{
+            width:90%;
+            height: 6vh;
+            margin-left:5%;
+            background:#3a86ff;
+            border:none;
+            border-radius: 15px;
+            color:white;
+            font-family: arial;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.5s ease-in-out;
+            cursor: pointer;
+
+        }
+        input[type="submit"]:hover{
+            background:rgb(5, 24, 5) ;
+        }
+
+        #delbut{
+            background-color: rgb(193, 33, 12);
+            transition: all 0.5s ease-in-out;
+
+        }
+        #delbut:hover{
+            background-color: rgb(56, 3, 3);
+        }
+
+
+    
+      </style>
+    <div class="containerx">
+
+        <div id="sidebar1">
+          <div id="admindetail">
+            <p>Admin Dashboard</p>
+            <div id="admicon">
+                <a><img src="static/icons/home.png"></a>
+                <a><img src="static/icons/envelope.png"></a>
+                <a><img src="static/icons/settings.png"></a>
+            </div>
+
+          </div>
+
+          <div id="admlink">
+            <a href="/subjects"><img src="static/icons/document.png">Subject</a>
+            <a href="/chapter"><img src="static/icons/book.png">Chapter</a>
+            <a href="/quiz"><img src="static/icons/audit.png">Quiz</a>
+            <a href="/question"><img src="static/icons/question.png">Questions</a>
+            <a><img src="static/icons/database.png">Database</a>
+          </div>
+           
+        </div>
+        
+        
+        <div id="main">
+            <header>
+                <div style="font-family: Arial, Helvetica, sans-serif;font-weight: 600;color:rgb(23, 24, 29);font-size: 13px;">xyz@email.com</div>
+                <div style="display: flex;flex-direction: row;justify-content: right;"><img src="static/avatar.png" style="height:35px;width: 35px;border-radius:50%;border:1px solid black;margin-left: 30px;margin-right: 30px;"></div>
+
+            </header>
+        <div id="add">
+            <h1>add subject</h1>
+        <table style="border:2px solid rgb(7, 22, 7);border-collapse: collapse;"> 
+        
+            <thead>
+                <tr>
+                    <th>subject</th>
+                    <th>code</th>
+                    <th>description</th>
+                    <th>Add</th>
+
+
+                </tr>
+
+
+            </thead>
+            <tbody>
+                <tr>
+                    <form action="/subjects" method="POST">
+                    <input type="hidden" name="action" value="add">
+                    <td><input type="text" class="form-control"placeholder="enter subject name" name="subject"></td>
+                    <td><input type="text"class="form-control" placeholder="enter subject code" name="scode"></td>
+                    <td><input type="text"class="form-control" placeholder="enter description" name="sdesc"></td>
+                    <td><input type="submit" value="Add"></td>
+                </form>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% if sub_list %}
+    <div id="del">
+        <h1>subject table</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Subject</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for sub in sub_list %}
+                <tr>
+                <form action="/subjects" method="POST">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="itemid" value="{{ sub[0] }}">
+                    <td>{{sub[0]}}</td>
+                    <td>{{sub[1]}}</td>
+                    <td>{{sub[2]}}</td>
+                    <td>{{sub[3]}}</td>
+                    <td><input type="submit"id="delbut" value="delete"></td>
+                </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+
+
+
+        </table>
+    </div>
+    {% endif %}
+     
+    </div>
+
+
+ </div>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
