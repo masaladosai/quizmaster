@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>quizapp</title>
+  <link rel="stylesheet" href="static/css/admin.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div id="sidebar1">
+          <div id="admindetail">
+            <p>Admin Dashboard</p>
+            <div id="admicon">
+                <a href="/admin"><img src="static/icons/home.png"></a>
+                <a><img src="static/icons/envelope.png"></a>
+                <a><img src="static/icons/settings.png"></a>
+            </div>
+
+          </div>
+
+          <div id="admlink">
+            <a href="/subjects"><img src="static/icons/document.png">Subject</a>
+            <a href="/chapter"><img src="static/icons/book.png">Chapter</a>
+            <a href="/quiz"><img src="static/icons/audit.png">Quiz</a>
+            <a href="/question"><img src="static/icons/question.png">Questions</a>
+            <a href="/database"><img src="static/icons/database.png">Database</a>
+          </div>
+           
+        </div>
+        
+        
+        <div id="main">
+            <header>
+                <div style="font-family: Arial, Helvetica, sans-serif;font-weight: 600;color:rgb(23, 24, 29);font-size: 13px;">quizmaster@email.com</div>
+                <div style="display: flex;flex-direction: row;justify-content: right;"><img src="static/avatar.png" style="height:35px;width: 35px;border-radius:50%;border:1px solid black;margin-left: 30px;margin-right: 30px;"></div>
+
+            </header>
+            <div id="mainbody">
+                <div id="stats">
+                    <div class="box" >
+                        <div class="detail" id="detail1"><span style="font-weight:600;font-size:20px;margin-left: 10px;margin-top: 10px;">{{total_users}}</span>
+                            <span style="margin-left:10px;">total users</span>
+                            <span style="margin-left:10px;margin-top: 5%;font-size: 15px;">expand &larr;</span> </div>
+                        <div class="icon" id="icon1"><img src="static/icons2/stats.png"></div>
+                    </div>
+                    <div class="box" >
+                        <div class="detail"id="detail2"><span style="font-weight:600;font-size:20px;margin-left: 10px;margin-top: 10px;">{{total_quizzes}}</span>
+                            <span style="margin-left:10px;">quizzes</span>
+                            <span style="margin-left:10px;margin-top: 5%;font-size: 15px;">expand &larr;</span></div>
+                        <div class="icon" id="icon2"><img src="static/icons2/users.png"></div>
+                    </div>
+                    <div class="box" >
+                        <div class="detail" id="detail3"><span style="font-weight:600;font-size:20px;margin-left: 10px;margin-top: 10px;">{{total_questions}}</span>
+                            <span style="margin-left:10px;">unique questions</span>
+                            <span style="margin-left:10px;margin-top: 5%;font-size: 15px;">expand &larr;</span></div>
+                        <div class="icon" id="icon3"><img src="static/icons2/quiz.png"></div>
+                </div>
+
+                <div class="box">
+                    <div class="detail"id="detail4"><span style="font-weight:600;font-size:20px;margin-left: 10px;margin-top: 10px;">{{total_subjects}}</span>
+                        <span style="margin-left:10px;">total subjects</span>
+                        <span style="margin-left:10px;margin-top: 5%;font-size: 15px;">expand &larr;</span></div>
+                    <div class="icon" id="icon4"><img src="static/icons2/comment.png"></div>
+                    </div>
+                </div>
+                <div id="chartbox">
+                    
+                   <div id="charts">
+                       <div id="chart1"></div>
+                      <div id="chart2"></div>
+                   </div> 
+                </div>
+                <div id="highest"></div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+  <script>
+   var optionspie = {
+                chart: {
+                    type: 'pie',
+                    height: 330
+                },
+                title: {
+                    text: 'Weight Distribution', 
+                    align: 'left'
+                },
+                style: {
+                    fontSize: '20px',
+                    fontWeight: 'bold',
+                    color: '#333'
+                },
+                series: {{ pie_data | tojson | safe }},
+                labels: {{ pie_labels | tojson | safe }}, 
+                colors: ["#8e44ad", "#2c3e50", "#16a085", "#d35400", "#c0392b"],
+                responsive: [{
+                    breakpoint: 420,
+                    options: {
+                        chart: {
+                            width: 400
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }]
+            };
+
+            var pieChart = new ApexCharts(document.querySelector("#chart2"), optionspie);
+            pieChart.render();
+
+            // Line chart for performance graph
+            var optionsline = {
+                chart: {
+                    type: 'line',
+                    height: 330
+                },
+                title: {
+                    text: 'Performance Graph', 
+                    align: 'left'
+                },
+                series: [{
+                    name: 'Performance',
+                    data: {{ data | tojson | safe }}// Simple dataset
+                }],
+                xaxis: {
+                    categories: {{labels | tojson | safe }}
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 3
+                },
+                colors: ['#0d6efd'], // Bootstrap primary blue
+                markers: {
+                    size: 5,
+                    colors: ['#dc3545'], // Bootstrap red for points
+                    strokeWidth: 2
+                }
+            };
+
+            var lineChart = new ApexCharts(document.querySelector("#chart1"), optionsline);
+            lineChart.render();
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+{% extends "head.html" %}
+
+{% block title %}User Database - Quiz App{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-primary text-center">Registered Users</h1>
+    
+    <div class="card p-4 mt-4 bg-light">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.registration_date }}</td>
+                    <td>
+                        <form action="{{ url_for('database.delete_user') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

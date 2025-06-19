@@ -1,0 +1,88 @@
+{% extends "head.html" %}
+
+{% block title %}User Performance{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">User Performance Dashboard</h2>
+    
+    <div class="row mt-4">
+        <!-- User Performance Summary -->
+        <div class="col-md-6">
+            <div class="card p-3">
+                <h5 class="text-center text-primary">User Statistics</h5>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>User ID:</strong> {{ user_id }}</li>
+                    <li class="list-group-item"><strong>Total Quizzes:</strong> {{ total_quizzes }}</li>
+                    <li class="list-group-item"><strong>Average Score:</strong> {{ avg_marks }}</li>
+                    <li class="list-group-item"><strong>Highest Score:</strong> {{ max_marks }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Performance Graph -->
+        <div class="col-md-6">
+            <div class="card p-3">
+                <h5 class="text-center text-primary">Quiz Performance</h5>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Scores Table -->
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card p-3">
+                <h5 class="text-center text-primary">Recent Quiz Scores</h5>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Quiz ID</th>
+                            <th>Marks</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in marks_data %}
+                        <tr>
+                            <td>{{ record.quiz_id }}</td>
+                            <td>{{ record.marks }}</td>
+                            <td>{{ record.date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('performanceChart').getContext('2d');
+    var performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ labels | tojson }},
+            datasets: [{
+                label: 'Quiz Scores',
+                data: {{ scores | tojson }},
+                backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                borderColor: '#007bff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}

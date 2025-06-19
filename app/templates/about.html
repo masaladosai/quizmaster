@@ -1,0 +1,41 @@
+{% extends "head.html" %}
+
+{% block title %}About - Quiz App{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1 class="text-primary">About This App</h1>
+    <p class="text-muted">A quiz application built to enhance learning and assessment.</p>
+    
+    <div class="card p-4 mt-4 bg-light">
+        <h3 class="text-dark">Developer Information</h3>
+        <p><strong>Name:</strong> Yash Jha</p>
+        <p><strong>Roll Number:</strong> 24F1002341</p>
+    </div>
+    
+    <div class="card p-4 mt-4 bg-light">
+        <h3 class="text-dark">Technologies Used</h3>
+        <p>This app is developed using:</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">HTML, CSS (Bootstrap) for frontend</li>
+            <li class="list-group-item">Flask (Python) for backend</li>
+            <li class="list-group-item">SQLAlchemy for database management</li>
+        </ul>
+    </div>
+    
+    <div class="card p-4 mt-4 bg-light">
+        <h3 class="text-dark">Features</h3>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">User authentication and quiz participation</li>
+            <li class="list-group-item">Performance tracking and result storage</li>
+            <li class="list-group-item">Admin dashboard for quiz management</li>
+        </ul>
+    </div>
+    
+    <div class="card p-4 mt-4 bg-light">
+        <h3 class="text-dark">Entity-Relationship Diagram</h3>
+        <p>Click below to view the ER diagram of this application:</p>
+        <a href="static/schema.png" class="btn btn-primary" target="_blank">View ER Diagram</a>
+    </div>
+</div>
+{% endblock %}

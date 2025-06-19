@@ -1,0 +1,246 @@
+{% extends "head.html" %}
+{% block head %}
+    <title>User | QuizMaster</title>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+#maincont {
+    display: flex;
+    flex-direction: row;
+    width: 99vw;
+    height:100% ;
+    background: white;
+}
+
+#quiznav {
+    width: 40vw;
+    background-color:rgb(23, 29, 31);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    height: 100vh;
+    position:fixed;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+}
+
+#paper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40vw;
+    width:59vw ; 
+    background: rgb(249, 247, 247);
+    padding: 10px;
+    padding-left: 20px;
+    min-height: 100vh;
+}
+.onewholequestion{
+    background-color: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    width: 57vw;
+
+}
+#choices{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+}
+#choices div{
+    padding-right: 5%;
+    width:12vw;
+}
+#choices div select{
+    width:10vw;
+    background-color: black;
+    color:white;
+    text-align: center;
+}
+.onewholequestion{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+
+}
+.quescontent{
+    margin:5% 5%;
+}
+
+#timer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    width:40vw;
+    justify-content: center;
+    align-items: center;
+
+}
+#timer div{
+    padding: 10px 10px;
+}
+#timer div img{
+    height: 25px;
+    width:25px;
+    margin-left: 3px;
+}
+#start img{
+    height: 25px;
+    width:25px;
+    margin-left: 3px;
+}
+
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="maincont">
+    <div id="quiznav">
+        {% if not ques_list %}
+        <div id="choices">
+            <div>
+                <form action="/user" method="POST">
+                    <select id="subject" class="form-control">
+                        <option selected value="0">Select Subject</option>
+                        {% for sub in sub_list %}
+                        <option value="{{ sub[0] }}">{{ sub[1] }}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+            <div>
+                <select id="chapter" name="chapter" class="form-control">
+                    <option value="0">Select Chapter</option>
+                </select>
+            </div>
+            <div>
+                <select id="quiz" name="quiz" class="form-control">
+                    <option value="0">Select Quiz</option>
+                </select>
+            </div>
+        </div>
+        <div style="margin-top: 10%;">
+            <button class="btn btn-primary" name="action" value="start" id="start">
+                Start Quiz <img src="static/icons2/tick.png">
+            </button>
+        </div>
+        </form>
+        {% endif %}
+        
+        {% if ques_list %}
+        <div id="timer">
+            <div><h1>60:00</h1></div>
+            <div>
+                <button class="btn btn-primary">Pause <img src="static/icons2/pause.png"></button>
+                <button class="btn btn-danger">Run <img src="static/icons2/play.png"></button>
+            </div>
+            <form action="/user" method="POST">
+            <div>
+                <button class="btn btn-success" name="action" value="finish">Submit <img src="static/icons2/tick.png"></button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div id="paper">
+        {% if not ques_list %}
+        <div class="onewholequestion">
+            <div class="quescontent">
+                <div id="question">1. Who is PM of India?</div><br>
+                <div class="form-check" id="radio_option">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" checked>
+                    <label class="form-check-label">Option 1</label><br>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault">
+                    <label class="form-check-label">Option 2</label><br>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault">
+                    <label class="form-check-label">Option 3</label><br>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault">
+                    <label class="form-check-label">Option 4</label>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if ques_list %}
+        {% for ques in ques_list %}
+        <div class="onewholequestion">
+            <div class="quescontent">
+                <div id="question">{{ ques[2] }}</div><br>
+                <div class="form-check" id="radio_option">
+                    <input class="form-check-input" type="radio" name="{{ques[0]}}" value="1" checked>
+                    <label class="form-check-label">{{ ques[3] }}</label><br>
+                    <input class="form-check-input" type="radio" name="{{ques[0]}}" value="2">
+                    <label class="form-check-label">{{ ques[4] }}</label><br>
+                    <input class="form-check-input" type="radio" name="{{ques[0]}}" value="3">
+                    <label class="form-check-label">{{ ques[5] }}</label><br>
+                    <input class="form-check-input" type="radio" name="{{ques[0]}}" value="4">
+                    <label class="form-check-label">{{ ques[6] }}</label>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+</form>
+{% endblock %}
+{% block scripts %}
+<script>
+   console.log("✅ JavaScript is Loaded!");
+
+// Handle Subject Change
+document.getElementById("subject").addEventListener("change", function() {
+    let subjectId = this.value;
+    let chapterSelect = document.getElementById("chapter");
+
+    console.log("Selected Subject ID:", subjectId);
+
+    // Reset Chapters
+    chapterSelect.innerHTML = '<option value="0">Select Chapter</option>';
+
+    if (subjectId && subjectId !== "0") {
+        fetch(`/get_chapters/${subjectId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received Chapters:", data);
+            data.forEach(chapter => {
+                let option = document.createElement("option");
+                option.value = chapter.id;
+                option.textContent = chapter.name;
+                chapterSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error fetching chapters:", error));
+    }
+});
+
+// Handle Chapter Change
+document.getElementById("chapter").addEventListener("change", function() {
+    let chapterId = this.value;
+    let quizSelect = document.getElementById("quiz");
+
+    console.log("Selected Chapter ID:", chapterId);
+
+    // Reset Quizzes
+    quizSelect.innerHTML = '<option value="0">Select Quiz</option>';
+
+    if (chapterId && chapterId !== "0") {
+        fetch(`/get_quiz/${chapterId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received Quizzes:", data);
+            data.forEach(quiz => {
+                let option = document.createElement("option");
+                option.value = quiz.id;
+                option.textContent = quiz.name;
+                quizSelect.appendChild(option);  // Fixed: Append to quizSelect
+            });
+        })
+        .catch(error => console.error("Error fetching quizzes:", error));
+    }
+});
+
+</script>
+{% endblock %}

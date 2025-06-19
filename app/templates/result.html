@@ -1,0 +1,135 @@
+{% extends "head.html" %}
+
+{% block head %}
+    <title>Quiz Results | QuizMaster</title>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    #maincont {
+        display: flex;
+        flex-direction: row;
+        width: 99vw;
+        height: 100%;
+        background: white;
+    }
+
+    #quiznav {
+        width: 40vw;
+        background-color: rgb(23, 29, 31);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #paper {
+        display: flex;
+        flex-direction: column;
+        margin-left: 40vw;
+        width: 59vw;
+        background: rgb(249, 247, 247);
+        padding: 10px;
+        padding-left: 20px;
+        min-height: 100vh;
+    }
+
+    .card {
+        background: white;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        text-align: center;
+    }
+
+    .table thead {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="maincont">
+    <!-- Sidebar (Quiz Navigation) -->
+    <div id="quiznav">
+        <h2>Quiz Results</h2>
+        <h3 class="text-success">{{ correct_answers }} / {{ total_questions }}</h3>
+        <p>Correct Answers</p>
+    </div>
+
+    <!-- Results Section -->
+    <div id="paper">
+        <!-- Performance Graph -->
+        <div class="card mb-4">
+            <h5 class="text-primary">Performance Overview</h5>
+            <div class="chart-container">
+                <canvas id="resultChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Answers Table -->
+        <div class="card">
+            <h5 class="text-primary">Your Answers</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Your Answer</th>
+                        <th>Correct Answer</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for question in results %}
+                    <tr>
+                        <td>{{ question.question }}</td>
+                        <td>{{ question.user_answer }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>
+                            {% if question.is_correct %}
+                                <span class="text-success">✔ Correct</span>
+                            {% else %}
+                                <span class="text-danger">✘ Incorrect</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('resultChart').getContext('2d');
+    var resultChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Correct', 'Incorrect'],
+            datasets: [{
+                data: [{{ correct_answers }}, {{ total_questions - correct_answers }}],
+                backgroundColor: ['#007bff', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+{% endblock %}
