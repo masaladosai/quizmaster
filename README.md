@@ -37,4 +37,19 @@
 ---
 
 ## 🧑‍💻 Project Structure
-
+quiz-master/
+├── app/
+│ ├── templates/
+│ │ ├── layout.html
+│ │ ├── quiz.html
+│ │ └── ...
+│ ├── static/
+│ │ ├── css/
+│ │ └── js/
+│ ├── routes/
+│ ├── models/
+│ └── init.py
+├── database/
+│ └── data.db
+├── app.py
+└── README.md
